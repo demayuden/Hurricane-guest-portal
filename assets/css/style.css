@@ -73,34 +73,53 @@ body{overflow:hidden}
 }
 
 /* header brand */
-.brand{
-  position:absolute;
-  top:32px;
-  left:32px;
-  display:flex;
-  gap:16px;
-  align-items:center;
-  z-index:3;
+/* ============================= */
+/*  BRAND LAYOUT (DESKTOP)      */
+/* ============================= */
+
+/* LOGO ON LEFT */
+.brand-left {
+  position: absolute;
+  top: 32px;
+  left: 32px;
+  z-index: 10;
 }
+
 .brand-logo {
-  width: 110px;      /* bigger logo */
-  height: auto;      /* keeps proportions, prevents squish */
+  width: 200px;
+  height: auto;
   object-fit: contain;
   filter: drop-shadow(0 4px 12px rgba(0,0,0,0.4));
 }
 
-.brand-text h1 {
-  margin: 0;
-  font-size: 20px;
-  color: #eaf0ff;
-  font-weight: 600;
+/* CENTERED TEXT (perfect centering) */
+.brand-center {
+  position: absolute;
+  top: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  z-index: 10;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.brand-text .sub {
+.brand-center h1 {
   margin: 0;
-  font-size: 13px;
-  color: rgba(255,255,255,0.7);
+  font-size: 24px;
+  font-weight: 700;
+  color: white;
 }
+
+.brand-center .sub {
+  margin: 0;
+  font-size: 14px;
+  opacity: 0.75;
+  color: white;
+}
+
 /* card */
 .card{
   width:100%;
@@ -261,4 +280,27 @@ input:focus{
 @media (max-width:640px){
   .terms-panel{ width:96%; padding:16px; max-height:92vh; border-radius:10px; }
   .terms-close{ right:10px; top:8px; width:36px; height:36px; font-size:18px; }
+}
+
+@media (max-width:640px) {
+
+  /* Center everything on mobile */
+  .brand {
+    left: 50%;
+    transform: translateX(-50%);
+    top: 16px;
+  }
+
+  /* shrink logo a bit */
+  .brand-logo {
+    width: 90px;
+  }
+
+  /* center the text under logo */
+  .brand-text {
+    top: 90px;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+  }
 }
