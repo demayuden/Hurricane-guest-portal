@@ -4,16 +4,29 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Hurricane Guest Wi-Fi</title>
-  <link rel="icon" type="image/png" href="assets/logo-circle.png" />
+
+  <!-- Tab Icon -->
+  <link rel="icon" type="image/png" href="assets/images/logo-circle.png" />
+
+  <!-- Main CSS -->
   <link rel="stylesheet" href="assets/css/style.css" />
 </head>
+
 <body>
+
+  <!-- BACKGROUND VIDEO + EFFECTS -->
   <div id="bg">
+    <video class="background-video" autoplay muted loop playsinline>
+      <source src="assets/bg.mp4" type="video/mp4" />
+    </video>
+
     <canvas id="orbCanvas" aria-hidden="true"></canvas>
     <div class="nebula"></div>
   </div>
 
   <main class="stage" role="main">
+    
+    <!-- TOP BRAND HEADER -->
     <header class="brand">
       <img src="assets/images/logo.png" alt="Hurricane logo" class="brand-logo" />
       <div class="brand-text">
@@ -22,11 +35,13 @@
       </div>
     </header>
 
+    <!-- LOGIN CARD -->
     <section class="card" aria-labelledby="portalTitle">
       <h2 id="portalTitle">Email Based Auth</h2>
       <p class="lead">Provide email address to receive OTP.</p>
 
       <form id="portalForm" onsubmit="return false" class="form" aria-describedby="helpText">
+
         <label class="field">
           <span class="label-text">Email</span>
           <input id="email" type="email" placeholder="you@gmail.com" autocomplete="email" required />
@@ -43,7 +58,10 @@
         <div class="controls">
           <div class="terms">
             <input id="agree" type="checkbox" checked />
-            <label for="agree" class="terms-text">I have read and agreed with the <a href="#" id="termsLink">Terms of Use</a></label>
+            <label for="agree" class="terms-text">
+              I have read and agreed with the 
+              <a href="#" id="termsLink">Terms of Use</a>
+            </label>
           </div>
 
           <div id="msg" class="msg" role="status" aria-live="polite"></div>
@@ -52,47 +70,50 @@
         <div class="actions">
           <button id="loginBtn" class="btn primary" type="button">Connect</button>
         </div>
+
       </form>
 
-      <p id="helpText" class="meta">Need help? <a href="mailto:sales@hurricane.com.my">sales@hurricane.com.my</a></p>
+      <p id="helpText" class="meta">
+        Need help? <a href="mailto:sales@hurricane.com.my">sales@hurricane.com.my</a>
+      </p>
     </section>
   </main>
 
   <!-- TERMS MODAL -->
-<div id="termsModal" class="terms-modal" role="dialog" aria-modal="true" aria-labelledby="termsTitle" aria-hidden="true">
-  <div class="terms-backdrop" data-close="true"></div>
+  <div id="termsModal" class="terms-modal" role="dialog" aria-modal="true" aria-labelledby="termsTitle" aria-hidden="true">
+    <div class="terms-backdrop" data-close="true"></div>
 
-  <div class="terms-panel" role="document" tabindex="-1">
-    <button class="terms-close" id="termsCloseBtn" aria-label="Close terms">&times;</button>
+    <div class="terms-panel" role="document" tabindex="-1">
+      <button class="terms-close" id="termsCloseBtn" aria-label="Close terms">&times;</button>
 
-    <header class="terms-header">
-      <h2 id="termsTitle">Terms of Use</h2>
-    </header>
+      <header class="terms-header">
+        <h2 id="termsTitle">Terms of Use</h2>
+      </header>
 
-    <div class="terms-body" id="termsContent" tabindex="0">
-      <!-- paste the long terms text here, or load dynamically -->
-      <p><strong>Dear User:</strong></p>
-      <p>You are about to access the Internet through a hotspot (the "Service") operated by Hurricane Systems. By using the Service, you agree with all terms in this Terms of Use and that you do so solely at your own risk.</p>
+      <div class="terms-body" id="termsContent" tabindex="0">
 
-      <ol>
-        <li>It is the user's sole responsibility to protect his/her information from all risks associated with Internet usage, including but not limited to any exposure, damage, injury, loss, or theft that may occur as a result of access to malicious links, phishing websites and fraud information.</li>
+        <p><strong>Dear User:</strong></p>
+        <p>You are about to access the Internet through a hotspot (the "Service") operated by Hurricane Systems. By using the Service, you agree with all terms in this Terms of Use and that you do so solely at your own risk.</p>
 
-        <li>Your use of the Service and any activities conducted online through the Service shall not violate any applicable law, regulation or ethic. Hurricane Systems shall not accept responsibility resulting from any inaccurate, unsuitable, offensive or illegal Internet communications of the users.</li>
+        <ol>
+          <li>It is the user's sole responsibility to protect his/her information from all risks associated with Internet usage, including but not limited to any exposure, damage, injury, loss, or theft that may occur as a result of access to malicious links, phishing websites and fraud information.</li>
 
-        <li>The Service is provided on an as available basis without warranties of any kind, including but not limited to network interruption, computer viruses, security attacks and acts of God.</li>
-      </ol>
+          <li>Your use of the Service and any activities conducted online through the Service shall not violate any applicable law, regulation or ethic. Hurricane Systems shall not accept responsibility resulting from any inaccurate, unsuitable, offensive or illegal Internet communications of the users.</li>
 
-      <!-- add more paragraphs as needed -->
+          <li>The Service is provided on an as available basis without warranties of any kind, including but not limited to network interruption, computer viruses, security attacks and acts of God.</li>
+        </ol>
+
+      </div>
+
+      <footer class="terms-footer">
+        <button id="acceptTermsBtn" class="btn primary">Accept</button>
+        <button id="declineTermsBtn" class="btn ghost">Decline</button>
+      </footer>
     </div>
-
-    <footer class="terms-footer">
-      <button id="acceptTermsBtn" class="btn primary">Accept</button>
-      <button id="declineTermsBtn" class="btn ghost">Decline</button>
-    </footer>
   </div>
-</div>
-<!-- END TERMS MODAL -->
 
-<script src="assets/js/script.js"></script>
+  <!-- SCRIPT -->
+  <script src="assets/js/script.js"></script>
+
 </body>
 </html>
