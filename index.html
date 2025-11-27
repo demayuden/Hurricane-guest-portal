@@ -1,256 +1,98 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Hurricane Guest Wi-Fi</title>
-<link rel="icon" href="favicon.ico" />
-<style>
-  :root{
-    --brand:#5b2fd6; /* purplish-blue */
-    --bg1:#1790ff;
-    --bg2:#1390f8;
-    --card:#eaf6ff;
-    --maxw:420px;
-    --radius:12px;
-    font-family: "Segoe UI", Roboto, Arial, sans-serif;
-    -webkit-font-smoothing:antialiased;
-    -moz-osx-font-smoothing:grayscale;
-  }
-  html,body{height:100%;margin:0;}
-  body{
-    background: linear-gradient(180deg,var(--bg1) 0%, var(--bg2) 100%);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    padding:24px;
-    color:#0b2840;
-  }
-
-  .wrapper{
-    width:100%;
-    max-width:1100px;
-    display:flex;
-    gap:36px;
-    align-items:center;
-    justify-content:center;
-  }
-
-  .branding{
-    display:flex;
-    flex-direction:column;
-    gap:12px;
-    align-items:flex-start;
-    color:rgba(255,255,255,0.98);
-    min-width:220px;
-  }
-  .logo{
-    width:180px;
-    height:auto;
-    background:rgba(255,255,255,0.06);
-    padding:8px;border-radius:8px;display:flex;align-items:center;
-  }
-  .desc{opacity:.95; font-size:14px; max-width:260px;line-height:1.35}
-
-  .card{
-    width:100%;
-    max-width:var(--maxw);
-    background:linear-gradient(180deg,#f8fdff, var(--card));
-    border-radius:var(--radius);
-    box-shadow: 0 10px 30px rgba(2,20,46,.18);
-    padding:22px;
-    position:relative;
-    border:1px solid rgba(8,24,40,.06);
-  }
-
-  h1{margin:6px 0 8px;font-weight:600;color:var(--brand);text-align:center;font-size:20px}
-  .hint{font-size:13px;color:#234; margin-bottom:10px;text-align:center}
-  form{display:flex;flex-direction:column;gap:12px}
-
-  .row{display:flex;gap:10px}
-  input[type="email"], input[type="text"]{
-    flex:1;
-    padding:12px 14px;
-    border-radius:8px;border:1px solid rgba(0,0,0,.08);
-    font-size:15px;outline:none;
-    box-sizing:border-box;background:white;
-  }
-  input::placeholder{color:#9aa8b8}
-  input:focus{box-shadow:0 8px 20px rgba(91,47,214,.08);border-color:var(--brand)}
-
-  .btn{
-    padding:10px 14px;border-radius:10px;border:none;
-    font-weight:700;cursor:pointer;
-    background:linear-gradient(180deg,var(--brand), #3b1ee0);
-    color:white;box-shadow:0 10px 20px rgba(91,47,214,.20);
-    transition:transform .14s ease, box-shadow .14s ease, opacity .12s ease;
-    display:inline-flex;align-items:center;justify-content:center;
-  }
-  .btn:hover{ transform: translateY(-3px) scale(1.02); box-shadow:0 16px 30px rgba(91,47,214,.22) }
-  .btn:active{ transform: translateY(-1px) scale(1.01) }
-  .btn.ghost{
-    background:transparent;color:var(--brand);border:1px solid rgba(91,47,214,.12);
-    box-shadow:none;font-weight:600;
-  }
-  .small{font-size:13px;color:#405060}
-  .terms{display:flex;gap:8px;align-items:center}
-  .error{color:#c41e3a;font-size:13px}
-  .success{color:green;font-size:13px}
-
-  .footer{margin-top:10px;font-size:13px;color:#234; text-align:center}
-
-  @media(max-width:760px){
-    body{padding:12px}
-    .wrapper{flex-direction:column;align-items:center}
-    .branding{order:2;align-items:center;text-align:center}
-    .card{order:1}
-    .logo{width:140px}
-    .desc{max-width:320px}
-  }
-</style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Hurricane Guest Wi-Fi</title>
+  <link rel="icon" type="image/png" href="assets/logo-circle.png" />
+  <link rel="stylesheet" href="assets/css/style.css" />
 </head>
 <body>
-  <!--
-    INSTRUCTIONS:
-    - Replace "logo.svg" with your logo file path or data-URI.
-    - Replace endpoints '/api/request-otp' and '/api/verify-otp' with gateway/backend endpoints (if any).
-    - If you just hand this file to the Wi-Fi admin, they can paste it into the captive portal HTML override.
-  -->
-  <div class="wrapper" role="main">
-    <div class="branding" aria-hidden="false">
-      <div class="logo"><img src="logo.svg" alt="Hurricane logo" style="width:100%;height:auto;display:block" /></div>
-      <div class="desc">
-        Welcome to <strong>Hurricane Guest Wi-Fi</strong>. Enter your email to receive a one-time code (OTP) and connect. Need help? Email <a href="mailto:support@hurricane.com.my" style="color:rgba(255,255,255,0.95);text-decoration:underline">support@hurricane.com.my</a>.
+  <div id="bg">
+    <canvas id="orbCanvas" aria-hidden="true"></canvas>
+    <div class="nebula"></div>
+  </div>
+
+  <main class="stage" role="main">
+    <header class="brand">
+      <img src="assets/images/logo.png" alt="Hurricane logo" class="brand-logo" />
+      <div class="brand-text">
+        <h1>Hurricane Guest Wi-Fi</h1>
+        <p class="sub">Secure ephemeral access • Fast • Monitored</p>
       </div>
-    </div>
+    </header>
 
-    <div class="card" aria-labelledby="title">
-      <h1 id="title">Email Based Auth</h1>
-      <div class="hint">Provide your email to receive an OTP</div>
+    <section class="card" aria-labelledby="portalTitle">
+      <h2 id="portalTitle">Email Based Auth</h2>
+      <p class="lead">Provide email address to receive OTP.</p>
 
-      <form id="portalForm" onsubmit="return false" aria-describedby="form-note">
-        <div class="row">
-          <input id="email" type="email" placeholder="Email address" required autocomplete="email" />
+      <form id="portalForm" onsubmit="return false" class="form" aria-describedby="helpText">
+        <label class="field">
+          <span class="label-text">Email</span>
+          <input id="email" type="email" placeholder="you@gmail.com" autocomplete="email" required />
+        </label>
+
+        <div class="otp-row">
+          <label class="field otp-field">
+            <span class="label-text">OTP</span>
+            <input id="otp" type="text" inputmode="numeric" maxlength="6" placeholder="••••••" />
+          </label>
           <button id="getOtp" class="btn ghost" type="button" aria-live="polite">Get OTP</button>
         </div>
 
-        <input id="otp" type="text" placeholder="Enter OTP" inputmode="numeric" maxlength="6" />
+        <div class="controls">
+          <div class="terms">
+            <input id="agree" type="checkbox" checked />
+            <label for="agree" class="terms-text">I have read and agreed with the <a href="#" id="termsLink">Terms of Use</a></label>
+          </div>
 
-        <div class="terms">
-          <input id="agree" type="checkbox" checked />
-          <label for="agree" class="small">I agree to the <a href="#" target="_blank">Terms of Use</a></label>
+          <div id="msg" class="msg" role="status" aria-live="polite"></div>
         </div>
 
-        <div id="msg" class="error" role="status" aria-live="polite" style="min-height:20px"></div>
-
-        <div style="display:flex;gap:10px;align-items:center;margin-top:6px">
-          <button id="loginBtn" class="btn" type="button">Log In</button>
-          <button id="altBtn" class="btn ghost" type="button" onclick="window.open('http://www.hurricane.com.my','_blank')">About</button>
+        <div class="actions">
+          <button id="loginBtn" class="btn primary" type="button">Connect</button>
         </div>
       </form>
 
-      <div id="form-note" class="footer">By connecting you accept our usage policy. Access is temporary and monitored.</div>
+      <p id="helpText" class="meta">Need help? <a href="mailto:sales@hurricane.com.my">sales@hurricane.com.my</a></p>
+    </section>
+  </main>
+
+  <!-- TERMS MODAL -->
+<div id="termsModal" class="terms-modal" role="dialog" aria-modal="true" aria-labelledby="termsTitle" aria-hidden="true">
+  <div class="terms-backdrop" data-close="true"></div>
+
+  <div class="terms-panel" role="document" tabindex="-1">
+    <button class="terms-close" id="termsCloseBtn" aria-label="Close terms">&times;</button>
+
+    <header class="terms-header">
+      <h2 id="termsTitle">Terms of Use</h2>
+    </header>
+
+    <div class="terms-body" id="termsContent" tabindex="0">
+      <!-- paste the long terms text here, or load dynamically -->
+      <p><strong>Dear User:</strong></p>
+      <p>You are about to access the Internet through a hotspot (the "Service") operated by Hurricane Systems. By using the Service, you agree with all terms in this Terms of Use and that you do so solely at your own risk.</p>
+
+      <ol>
+        <li>It is the user's sole responsibility to protect his/her information from all risks associated with Internet usage, including but not limited to any exposure, damage, injury, loss, or theft that may occur as a result of access to malicious links, phishing websites and fraud information.</li>
+
+        <li>Your use of the Service and any activities conducted online through the Service shall not violate any applicable law, regulation or ethic. Hurricane Systems shall not accept responsibility resulting from any inaccurate, unsuitable, offensive or illegal Internet communications of the users.</li>
+
+        <li>The Service is provided on an as available basis without warranties of any kind, including but not limited to network interruption, computer viruses, security attacks and acts of God.</li>
+      </ol>
+
+      <!-- add more paragraphs as needed -->
     </div>
+
+    <footer class="terms-footer">
+      <button id="acceptTermsBtn" class="btn primary">Accept</button>
+      <button id="declineTermsBtn" class="btn ghost">Decline</button>
+    </footer>
   </div>
+</div>
+<!-- END TERMS MODAL -->
 
-<script>
-  const emailInput = document.getElementById('email');
-  const otpInput = document.getElementById('otp');
-  const getOtpBtn = document.getElementById('getOtp');
-  const loginBtn = document.getElementById('loginBtn');
-  const msg = document.getElementById('msg');
-
-  function showMessage(t, cls='error'){
-    msg.textContent = t;
-    msg.className = cls;
-  }
-
-  function clearMessage(){ msg.textContent=''; msg.className=''; }
-
-  // Basic client-side validation and UX helpers.
-  getOtpBtn.addEventListener('click', async () => {
-    clearMessage();
-    const email = emailInput.value.trim();
-    if(!email || !/^\S+@\S+\.\S+$/.test(email)){ showMessage('Please enter a valid email address.'); emailInput.focus(); return; }
-
-    // Visual feedback: disable and show sending.
-    getOtpBtn.disabled = true;
-    const prev = getOtpBtn.textContent;
-    getOtpBtn.textContent = 'Sending...';
-
-    try{
-      // CHANGE THIS URL to your backend or captive endpoint that sends OTP.
-      const res = await fetch('/api/request-otp', {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({ email })
-      });
-
-      const data = await res.json().catch(()=>({}));
-
-      if(res.ok){
-        showMessage('OTP sent — check your inbox.', 'success');
-        startTimer(60);
-      } else {
-        showMessage(data.message || 'Failed to send OTP. Try again later.');
-      }
-    } catch(e){
-      // If you don't have a backend, the admin can configure the captive portal to accept the form fields directly.
-      showMessage('Network error or endpoint missing. Give this file + instructions to network admin.', 'error');
-    }
-
-    getOtpBtn.disabled = false;
-    getOtpBtn.textContent = prev;
-  });
-
-  function startTimer(seconds){
-    let s = seconds;
-    getOtpBtn.disabled = true;
-    const iv = setInterval(()=> {
-      getOtpBtn.textContent = s + 's';
-      if(s-- <= 0){ clearInterval(iv); getOtpBtn.disabled=false; getOtpBtn.textContent='Get OTP'; }
-    },1000);
-  }
-
-  loginBtn.addEventListener('click', async () => {
-    clearMessage();
-    if(!document.getElementById('agree').checked){ showMessage('You must accept the terms.'); return; }
-    const email = emailInput.value.trim();
-    const otp = otpInput.value.trim();
-    if(!email || !otp){ showMessage('Email and OTP are required.'); return; }
-
-    loginBtn.disabled = true;
-    const prev = loginBtn.textContent;
-    loginBtn.textContent = 'Verifying...';
-
-    try{
-      // CHANGE THIS URL to your backend or portal verify endpoint.
-      const res = await fetch('/api/verify-otp', {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({ email, otp })
-      });
-
-      const data = await res.json().catch(()=>({}));
-
-      if(res.ok){
-        showMessage('Success — redirecting...', 'success');
-        // On success, gateway often expects a redirect to complete captive flow
-        // Use provided redirect from server or default to a success page.
-        window.location.href = data.redirect || '/connected';
-      } else {
-        showMessage(data.message || 'Invalid OTP or verification failed.');
-      }
-    } catch(e){
-      showMessage('Network error or endpoint missing. Give this file + instructions to network admin.', 'error');
-    }
-
-    loginBtn.disabled = false;
-    loginBtn.textContent = prev;
-  });
-
-  // Better UX: autofocus
-  setTimeout(()=>{ emailInput.focus(); }, 300);
-</script>
+<script src="assets/js/script.js"></script>
 </body>
 </html>
